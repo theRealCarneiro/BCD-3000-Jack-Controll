@@ -1,12 +1,9 @@
-#include <alsa/asoundlib.h>
-#include <alsa/control.h>
+
 #include <stdlib.h>
 #include <string.h>
-#include "bcdHeader.h"
-#include "jackHeader.h"
+#include "header.h"
 
-
-int midiValues[37] = { //-1 equals no led
+/*int midiValues[37] = { //-1 equals no led
 	-1, -1, -1, -1, -1,
 	21, -1, -1, -1, -1,
 	-1, 13, 24, 23, 22,
@@ -17,6 +14,7 @@ int midiValues[37] = { //-1 equals no led
  };
 
 int ledStatus[37] = {0};
+*/
 
 int main (int argc, char *argv[]){
 	system("amidi -l | grep BCD | cut -c5-12 >> hw.txt");
@@ -28,9 +26,6 @@ int main (int argc, char *argv[]){
 	hw[8] = '\0';
 	fclose(fp);
 	remove("hw.txt");
-
-	system("jackd -dalsa -dhw:BCD3000 -r44100 -p1024 -n2 -Xraw -i4");
-	system("Projects/BCD/Init.sh");
 
 	int status;
 	const char* portname = hw;
