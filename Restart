@@ -1,0 +1,5 @@
+#!/bin/sh 
+#jackd -dalsa -dhw:BCD3000 -r44100 -p1024 -n2 -Xraw -i4  # Start jack server
+startpulse # Create virtual sinks
+BCD &  # Start BCD3000 midi
+notify-send "Audio Server restarted" --urgency low
