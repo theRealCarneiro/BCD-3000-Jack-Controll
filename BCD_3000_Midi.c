@@ -12,29 +12,29 @@ snd_rawmidi_t *midiin = NULL;
 snd_rawmidi_t *midiout = NULL;
 
 void main(){
-	system("amidi -l | grep BCD | awk '{print $2}' > hw.txt");
+	system("amidi -l | grep BCD | awk '{print $2}' > /home/gabriel/hw.txt");
      FILE *fp;
      char hw[10];
      int i = 0;
-	fp = fopen("hw.txt","rt");
+	fp = fopen("/home/gabriel/hw.txt","rt");
 	while((hw[i] = fgetc(fp)) != EOF) i++;
 	hw[8] = '\0';
 	fclose(fp);
-	remove("hw.txt");
+	remove("/home/gabriel/hw.txt");
 	
 	const char *portname = hw;
 	char noteon[3];
 	openMidi(portname);
 	while(1){
-		int key = readMidi(noteon);
+		int key = readMidi(noteon); //reads midi input and return the key/knob that was used
 		noteon[1] = midiValues[key];
-		if(noteon[1] != -1 && (unsigned char)noteon[0] == 0x90){
+		if(noteon[1] != -1 && (unsigned char)noteon[0] == 0x90){ //0x90 == button 0xB0 == knob
 			noteon[0] = 0xB0;
-			noteon[2] = ledSwitch(key);
+			noteon[2] = ledStatus[key] = 127 - ledStatus[key]; //toggle led
 			writeMidi(noteon);
 		}
 
-		//printf("%x %d %d\n",(unsigned char)noteon[0], (int)noteon[1], (int)noteon[2]);
+		//printf("%x %d %d\n",(unsigned char)noteon[0], (int)noteon[1], (int)noteon[2]); //to print info
 		buttons[key](noteon[2]);
 	}
 }
@@ -80,17 +80,9 @@ void writeMidi(char noteon[3]){
 	}
 }
 
-int ledSwitch(int key){
-	if(ledStatus[key] == 0){
-		ledStatus[key] = 127;
-		return 127;
-	} else {
-		ledStatus[key] = 0;
-		return 0;
-	}
-}
-
 void mainVolume(char led){
+	VOL(sink, MAIN)
+	/*
 	char a[4];
 	char text[100];
 	if(led < 100){
@@ -98,60 +90,35 @@ void mainVolume(char led){
 		strcat(strcpy(text, MAINVOL), strcat(a, "%"));
 		system(text);
 	}
+	*/
 }
 
 void musicVolume(char led){
-	char a[4];
-	char text[100];
-	if(led < 100){
-		sprintf(a, "%d", led);
-		strcat(strcpy(text, MUSICVOL), strcat(a, "%"));
-		system(text);
-	}
+	VOL(sink, MUSIC)
 }
 
 void micVolume(char led){
-	char a[4];
-	char text[100];
-	if(led < 100){
-		sprintf(a, "%d", led);
-		strcat(strcpy(text, MICVOL), strcat(a, "%"));
-		system(text);
-	}
+	VOL(source,MIC)
 }
 
 void mainMaster(char led){
-	if(led == 127){
-		system(CONNECT_MAIN_MASTER);
-	}
-	else system(DISCONNECT_MAIN_MASTER);
+	led ? CONNECT(main,master) : DISCONNECT(main,master);
 }
 
 void mainPhone(char led){
-	if(led == 127){
-		system(CONNECT_MAIN_PHONE);
-	}
-	else system(DISCONNECT_MAIN_PHONE);
+	led ? CONNECT(main,phone) : DISCONNECT(main,phone);
 }
 
 void musicMaster(char led){
-	if(led == 127){
-		system(CONNECT_MUSIC_MASTER);
-	}
-	else system(DISCONNECT_MUSIC_MASTER);
+	led ? CONNECT(music,master) : DISCONNECT(music,master);
 }
 
 void musicPhone(char led){
-	if(led == 127){
-		system(CONNECT_MUSIC_PHONE);
-	}
-	else system(DISCONNECT_MUSIC_PHONE);
+	led ? CONNECT(music,phone) : DISCONNECT(music,phone);
 }
 
 void pauseSpotify(char led){
-	if(led == 127){
-		system(PLAY);
-	} else system(PAUSE);
+	system(led ? PLAY : PAUSE); 
 }
 
 void nextSong(char led){
@@ -165,6 +132,3 @@ void previousSong(char led){
 void noFunc(char led){
 	return;
 }
-
-
-

@@ -3,7 +3,7 @@ BCD:	BCD_3000_Midi.o
 BCD_3000_Midi.o:	BCD_3000_Midi.c
 	gcc -c BCD_3000_Midi.c
 clean:
-	rm -rf *.o
+	rm -rf *.o BCD
 install:
 	install BCD /usr/local/bin
 uninstall:

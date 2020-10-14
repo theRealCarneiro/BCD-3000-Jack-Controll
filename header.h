@@ -11,21 +11,11 @@ int readMidi(char buffer[3]);
 
 void writeMidi(char noteon[3]);
 
-int ledSwitch(int key);
-
-void test(char led, char b);
-
-void volume(char noteon[3]);
-
 void mainVolume(char led);
 
 void musicVolume(char led);
 
 void micVolume(char led);
-
-void master(int status, int channel);
-
-void phone(int status, int channel);
 
 void mainMaster(char led);
 
