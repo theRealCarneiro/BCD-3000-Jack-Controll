@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include "header.h"
 #include "config.h"
+#include <sys/wait.h> 
 
 int status;
 int mode = SND_RAWMIDI_SYNC;
@@ -12,20 +13,36 @@ snd_rawmidi_t *midiin = NULL;
 snd_rawmidi_t *midiout = NULL;
 
 void main(){
-	system("amidi -l | grep BCD | awk '{print $2}' > /home/gabriel/hw.txt");
+
+	FILE *fp;
+	char hw[10];
+
+	fp = popen("/usr/bin/amidi -l | /usr/bin/awk '/BCD/{print $2}'", "r"); 
+	if (fp == NULL) {
+		fprintf(stderr, "Failed to run command\n");
+		exit(1);
+	}
+
+	fgets(hw, sizeof(hw)-1, fp);
+	pclose(fp);
+
+	/* old
+	system("amidi -l | grep BCD | awk '{print $2}' > /tmp/hw.txt");
      FILE *fp;
      char hw[10];
      int i = 0;
-	fp = fopen("/home/gabriel/hw.txt","rt");
+	fp = fopen("/tmp/hw.txt","rt");
 	while((hw[i] = fgetc(fp)) != EOF) i++;
 	hw[8] = '\0';
 	fclose(fp);
-	remove("/home/gabriel/hw.txt");
-	
+	remove("/tmp/hw.txt");
+	*/
+
 	const char *portname = hw;
 	char noteon[3];
 	openMidi(portname);
 	while(1){
+		waitpid(-1, NULL, WNOHANG);
 		int key = readMidi(noteon); //reads midi input and return the key/knob that was used
 		noteon[1] = midiValues[key];
 		if(noteon[1] != -1 && (unsigned char)noteon[0] == 0x90){ //0x90 == button 0xB0 == knob
@@ -34,8 +51,11 @@ void main(){
 			writeMidi(noteon);
 		}
 
-		//printf("%x %d %d\n",(unsigned char)noteon[0], (int)noteon[1], (int)noteon[2]); //to print info
-		buttons[key](noteon[2]);
+		//printf("%x %d %d\n",(unsigned char)noteon[0], key, (int)noteon[2]); //to print info
+		if(fork() == 0){
+			buttons[key](noteon[2]);
+			exit(0);
+		}
 	}
 }
 
@@ -62,9 +82,8 @@ int readMidi(char buffer[3]){
 			errormessage("Problem reading MIDI input: %s", snd_strerror(status));
 		}
 		key = (int)buffer[1];
-
-		//printf("%x %d %d\n",(unsigned char)buffer[0], (int)buffer[1], (int)buffer[2]);
 	}
+
 	while(((int)buffer[2] != 127 && 
 		(unsigned char)buffer[0] == 0x90) ||
 		(((unsigned char)buffer[0] != 0x90) && 
@@ -82,15 +101,6 @@ void writeMidi(char noteon[3]){
 
 void mainVolume(char led){
 	VOL(sink, MAIN)
-	/*
-	char a[4];
-	char text[100];
-	if(led < 100){
-		sprintf(a, "%d", led);
-		strcat(strcpy(text, MAINVOL), strcat(a, "%"));
-		system(text);
-	}
-	*/
 }
 
 void musicVolume(char led){
@@ -127,6 +137,10 @@ void nextSong(char led){
 
 void previousSong(char led){
 	system(NEXT);
+}
+
+void connectDroidCam(char led){
+	system(DROIDCAM);
 }
 
 void noFunc(char led){

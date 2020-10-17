@@ -31,5 +31,7 @@ void nextSong(char led);
 
 void previousSong(char led);
 
+void connectDroidCam(char led);
+
 void noFunc(char led);
 
