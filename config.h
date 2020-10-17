@@ -27,43 +27,43 @@
 	}
 
 int midiValues[37] = { //-1 equals no led
-	-1, //0
-	-1, //1
-	-1, //2
-	-1, //3
-	-1, //4
-	21, //5
-	-1, //6
-	-1, //7
-	-1, //8
-	-1, //9
-	-1, //10
-	13, //11
-	24, //12
-	23, //13
-	22, //14
-	-1, //15
-	20, //16
-	19, //17
-	18, //18
-	17, //19
-	16, //20
-	15, //21
-	14, //22
-	-1, //23
-	12, //24
-	11, //25
-	10, //26
-	 9, //27
-	25, //28
-	 8, //29
-	 7, //30
-	 6, //31
-	 5, //32
-	 4, //33 
-	 3, //34
-	 2, //35
-	 1  //36
+	-1, //0	Search <<<	Deck A	Volume Fader	Deck	A
+	-1, //1	Search >>>	Deck A	Cross Fader	Deck A+B
+	-1, //2	Bend -		Deck A	Volume Fader	Deck B
+	-1, //3	Bend +		Deck A
+	-1, //4	Set Cue		Deck A
+	21, //5	Reloop		Deck A
+	-1, //6	Search <<<	Deck B
+	-1, //7	Search >>>	Deck B
+	-1, //8	Bend -		Deck B
+	-1, //9	Bend +		Deck B
+	-1, //10	Set Cue		Deck B
+	13, //11	Reloop		Deck B	Pitch Fader	Deck A
+	24, //12	Low Kill		Deck A	Pitch Fader	Deck B
+	23, //13	Mid Kill		Deck A
+	22, //14	High Kill		Deck A
+	-1, //15	Set Cue		Deck A
+	20, //16	Sync			Deck A
+	19, //17	Scratch		Deck A
+	18, //18  Play			Deck A
+	17, //19  Cue			Deck A
+	16, //20	Low Kill		Deck B
+	15, //21	Mid Kill		Deck B
+	14, //22	High Kill		Deck B 
+	-1, //23  Set loop		Deck B
+	12, //24	Sync			Deck B
+	11, //25	Scratch		Deck B
+	10, //26	Play			Deck B
+	 9, //27	Cue			Deck B
+	25, //28	Key Deck A+B	Deck A+N
+	 8, //29	EXT IN A		Input Select
+	 7, //30	EXT IN B		Input Select
+	 6, //31	ON			FX Control
+	 5, //32	FXv			FX Control
+	 4, //33	FX^			FX Control
+	 3, //34	Action		FX Control
+	 2, //35	Cue A		Cue Select
+	 1  //36	Cue B		Cue Select
  };
 
 int ledStatus[37] = {0};

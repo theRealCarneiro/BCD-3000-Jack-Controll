@@ -26,18 +26,6 @@ void main(){
 	fgets(hw, sizeof(hw)-1, fp);
 	pclose(fp);
 
-	/* old
-	system("amidi -l | grep BCD | awk '{print $2}' > /tmp/hw.txt");
-     FILE *fp;
-     char hw[10];
-     int i = 0;
-	fp = fopen("/tmp/hw.txt","rt");
-	while((hw[i] = fgetc(fp)) != EOF) i++;
-	hw[8] = '\0';
-	fclose(fp);
-	remove("/tmp/hw.txt");
-	*/
-
 	const char *portname = hw;
 	char noteon[3];
 	openMidi(portname);
@@ -45,6 +33,7 @@ void main(){
 		waitpid(-1, NULL, WNOHANG);
 		int key = readMidi(noteon); //reads midi input and return the key/knob that was used
 		noteon[1] = midiValues[key];
+
 		if(noteon[1] != -1 && (unsigned char)noteon[0] == 0x90){ //0x90 == button 0xB0 == knob
 			noteon[0] = 0xB0;
 			noteon[2] = ledStatus[key] = 127 - ledStatus[key]; //toggle led
@@ -82,9 +71,7 @@ int readMidi(char buffer[3]){
 			errormessage("Problem reading MIDI input: %s", snd_strerror(status));
 		}
 		key = (int)buffer[1];
-	}
-
-	while(((int)buffer[2] != 127 && 
+	} while(((int)buffer[2] != 127 && 
 		(unsigned char)buffer[0] == 0x90) ||
 		(((unsigned char)buffer[0] != 0x90) && 
 		(key == 18 || key == 19 || key == 12 || key == 11)));
