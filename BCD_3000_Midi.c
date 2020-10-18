@@ -1,8 +1,3 @@
-#include <alsa/asoundlib.h>
-#include <alsa/control.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
 #include "header.h"
 #include "config.h"
 

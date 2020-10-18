@@ -16,7 +16,7 @@
 	system("/home/gabriel/.local/bin/jack_pulse disconnect " STR(SINK) " " STR(DEVICE))
 
 #define DROIDCAM(TYPE) \
-	system("/home/gabriel/.local/bin/droidcamcli" STR(TYPE))
+	system("/home/gabriel/.local/bin/droidcamcli " STR(TYPE))
 
 #define VOL(TYPE,NAME)			\
 	char a[4];				\
@@ -28,47 +28,47 @@
 	}
 
 keys buttons[37] = {
-	/*Midi Value		Function		Led Status*/
-	{	-1,			&noFunc,			0	 },	   /*0	  Search <<<	Deck A*/	
-	{	-1,			&noFunc,			0	 },	   /*1	  Search >>>	Deck A*/
-	{	-1,			&noFunc,			0	 },	   /*2	  Bend -		Deck A*/
-	{	-1,			&noFunc,			0	 },	   /*3	  Bend +		Deck A*/
-	{	-1,			&noFunc,			0	 },	   /*4	  Set Cue		Deck A*/
-	{	21,			&noFunc,			0	 },	   /*5	  Reloop		Deck A*/
-	{	-1,			&nextSong,		0	 },	   /*6	  Search <<<	Deck B*/
-	{	-1,			&previousSong,		0	 },	   /*7	  Search >>>	Deck B*/
-	{	-1,			&noFunc,			0	 },	   /*8	  Bend -		Deck B*/
-	{	-1,			&noFunc,			0	 },	   /*9	  Bend +		Deck B*/
-	{	-1,			&noFunc,			0	 },	   /*10	  Set Cue		Deck B*/
-	{	13,			&noFunc,			0	 },	   /*11	  Reloop		Deck B*/
-	{	24,			&mainMaster,		0	 },	   /*12	  Low Kill	Deck A*/
-	{	23,			&mainPhone,		0	 },	   /*13	  Mid Kill	Deck A*/
-	{	22,			&noFunc,			0	 },	   /*14	  High Kill	Deck A*/
-	{	-1,			&noFunc,			0	 },	   /*15	  Set Cue		Deck A*/
-	{	20,			&noFunc,			0	 },	   /*16	  Sync		Deck A*/
-	{	19,			&noFunc,			0	 },	   /*17	  Scratch		Deck A*/
-	{	18,			&noFunc,			0	 },	   /*18	  Play		Deck A*/
-	{	17,			&noFunc,			0	 },	   /*19	  Cue		Deck A*/
-	{	16,			&musicMaster,		0	 },	   /*20	  Low Kill	Deck B*/
-	{	15,			&musicPhone,		0	 },	   /*21	  Mid Kill	Deck B*/
-	{	14,			&noFunc,			0	 },	   /*22	  High Kill	Deck B*/
-	{	-1,			&noFunc,			0	 },	   /*23	  Set loop	Deck B*/
-	{	12,			&noFunc,			0	 },	   /*24	  Sync		Deck B*/
-	{	11,			&noFunc,			0	 },	   /*25	  Scratch		Deck B*/
-	{	10,			&pauseSpotify,		0	 },	   /*26	  Play		Deck B*/
-	{	 9,			&noFunc,			0	 },	   /*27	  Cue		Deck B*/
-	{	25,			&connectDroidcam,	0	 },	   /*28	  Key Deck A+B	Deck A+B*/
-	{	 8,			&noFunc,			0	 },	   /*29	  EXT IN A	Input Selec*/
-	{	 7,			&noFunc,			0	 },	   /*30	  EXT IN B	Input Selec*/
-	{	 6,			&noFunc,			0	 },	   /*31	  ON			FX Control*/
-	{	 5,			&noFunc,			0	 },	   /*32	  FXv		FX Control*/
-	{	 4,			&noFunc,			0	 },	   /*33	  FX^		FX Control*/
-	{	 3,			&noFunc,			0	 },	   /*34	  Action		FX Control*/
-	{	 2,			&noFunc,			0	 },	   /*35	  Cue A		Cue Select*/
-	{	 1,			&noFunc,			0	 },	   /*36	  Cue B		Cue Select*/
+	/*Midi Value		Function		Led Status */	   /*Key	  Key name	Location	  */
+	{	-1,			&noFunc,			0	 },	   /* 0	  Search <<<	Deck A	  */	
+	{	-1,			&noFunc,			0	 },	   /* 1	  Search >>>	Deck A	  */
+	{	-1,			&noFunc,			0	 },	   /* 2	  Bend -		Deck A	  */
+	{	-1,			&noFunc,			0	 },	   /* 3	  Bend +		Deck A	  */
+	{	-1,			&noFunc,			0	 },	   /* 4	  Set Cue		Deck A	  */
+	{	21,			&noFunc,			0	 },	   /* 5	  Reloop		Deck A	  */
+	{	-1,			&nextSong,		0	 },	   /* 6	  Search <<<	Deck B	  */
+	{	-1,			&previousSong,		0	 },	   /* 7	  Search >>>	Deck B	  */
+	{	-1,			&noFunc,			0	 },	   /* 8	  Bend -		Deck B	  */
+	{	-1,			&noFunc,			0	 },	   /* 9	  Bend +		Deck B	  */
+	{	-1,			&noFunc,			0	 },	   /* 10	  Set Cue		Deck B	  */
+	{	13,			&noFunc,			0	 },	   /* 11	  Reloop		Deck B	  */
+	{	24,			&mainMaster,		0	 },	   /* 12	  Low Kill	Deck A	  */
+	{	23,			&mainPhone,		0	 },	   /* 13	  Mid Kill	Deck A	  */
+	{	22,			&noFunc,			0	 },	   /* 14	  High Kill	Deck A	  */
+	{	-1,			&noFunc,			0	 },	   /* 15	  Set Cue		Deck A	  */
+	{	20,			&noFunc,			0	 },	   /* 16	  Sync		Deck A	  */
+	{	19,			&noFunc,			0	 },	   /* 17	  Scratch		Deck A	  */
+	{	18,			&noFunc,			0	 },	   /* 18	  Play		Deck A	  */
+	{	17,			&noFunc,			0	 },	   /* 19	  Cue		Deck A	  */
+	{	16,			&musicMaster,		0	 },	   /* 20	  Low Kill	Deck B	  */
+	{	15,			&musicPhone,		0	 },	   /* 21	  Mid Kill	Deck B	  */
+	{	14,			&noFunc,			0	 },	   /* 22	  High Kill	Deck B	  */
+	{	-1,			&noFunc,			0	 },	   /* 23	  Set loop	Deck B	  */
+	{	12,			&noFunc,			0	 },	   /* 24	  Sync		Deck B	  */
+	{	11,			&noFunc,			0	 },	   /* 25	  Scratch		Deck B	  */
+	{	10,			&pauseSpotify,		0	 },	   /* 26	  Play		Deck B	  */
+	{	 9,			&noFunc,			0	 },	   /* 27	  Cue		Deck B	  */
+	{	25,			&connectDroidcam,	0	 },	   /* 28	  Key Deck A+B	Deck A+B	  */
+	{	 8,			&noFunc,			0	 },	   /* 29	  EXT IN A	Input Select*/
+	{	 7,			&noFunc,			0	 },	   /* 30	  EXT IN B	Input Select*/
+	{	 6,			&noFunc,			0	 },	   /* 31	  ON			FX Control  */
+	{	 5,			&noFunc,			0	 },	   /* 32	  FXv		FX Control  */
+	{	 4,			&noFunc,			0	 },	   /* 33	  FX^		FX Control  */
+	{	 3,			&noFunc,			0	 },	   /* 34	  Action		FX Control  */
+	{	 2,			&noFunc,			0	 },	   /* 35	  Cue A		Cue Select  */
+	{	 1,			&noFunc,			0	 },	   /* 36	  Cue B		Cue Select  */
 };
 
-knobFunc knobs[20] = { //-1 equals no led
+knobFunc knobs[20] = { 
 	&mainVolume, 	//0		Volume Fader	Deck	A
 	&noFunc,	   	//1		Cross Fader	Deck A+B
 	&musicVolume,	//2		Volume Fader	Deck B

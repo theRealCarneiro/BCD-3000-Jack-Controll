@@ -1,5 +1,8 @@
 #include <alsa/asoundlib.h>
 #include <alsa/control.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
 
 typedef void (*keyFunc) (char);
 
@@ -10,7 +13,6 @@ typedef struct keys {
 	keyFunc function;
 	int ledStatus;
 } keys;
-
 
 void errormessage(const char *format, ...);
 
