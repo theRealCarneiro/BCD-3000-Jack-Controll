@@ -28,7 +28,7 @@
 	}
 
 keys buttons[37] = {
-	/*Midi Value		Function			*/	/*Key	  Key name	Location	  */
+	/*Midi Value		Function				  Key	Key name		Location	  */
 	{	-1,			&noFunc			},	/* 0		Search <<<	Deck A	  */	
 	{	-1,			&noFunc			},	/* 1		Search >>>	Deck A	  */
 	{	-1,			&noFunc			},	/* 2		Bend -		Deck A	  */
