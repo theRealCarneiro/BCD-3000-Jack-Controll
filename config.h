@@ -28,44 +28,44 @@
 	}
 
 keys buttons[37] = {
-	/*Midi Value		Function				* Key	Key name		Location	  */
-	{	-1,			&noFunc			},	/* 0		Search <<<	Deck A	  */	
-	{	-1,			&noFunc			},	/* 1		Search >>>	Deck A	  */
-	{	-1,			&noFunc			},	/* 2		Bend -		Deck A	  */
-	{	-1,			&noFunc			},	/* 3		Bend +		Deck A	  */
-	{	-1,			&noFunc			},	/* 4		Set Cue		Deck A	  */
-	{	21,			&noFunc			},	/* 5		Reloop		Deck A	  */
-	{	-1,			&nextSong			},	/* 6		Search <<<	Deck B	  */
-	{	-1,			&previousSong		},	/* 7		Search >>>	Deck B	  */
-	{	-1,			&noFunc			},	/* 8		Bend -		Deck B	  */
-	{	-1,			&noFunc			},	/* 9		Bend +		Deck B	  */
-	{	-1,			&noFunc			},	/* 10	Set Cue		Deck B	  */
-	{	13,			&noFunc			},	/* 11	Reloop		Deck B	  */
-	{	24,			&mainMaster		},	/* 12	Low Kill		Deck A	  */
-	{	23,			&mainPhone		},	/* 13	Mid Kill		Deck A	  */
-	{	22,			&noFunc			},	/* 14	High Kill		Deck A	  */
-	{	-1,			&noFunc			},	/* 15	Set Cue		Deck A	  */
-	{	20,			&noFunc			},	/* 16	Sync			Deck A	  */
-	{	19,			&noFunc			},	/* 17	Scratch		Deck A	  */
-	{	18,			&noFunc			},	/* 18	Play			Deck A	  */
-	{	17,			&noFunc			},	/* 19	Cue			Deck A	  */
-	{	16,			&musicMaster		},	/* 20	Low Kill		Deck B	  */
-	{	15,			&musicPhone		},	/* 21	Mid Kill		Deck B	  */
-	{	14,			&noFunc			},	/* 22	High Kill		Deck B	  */
-	{	-1,			&noFunc			},	/* 23	Set loop		Deck B	  */
-	{	12,			&noFunc			},	/* 24	Sync			Deck B	  */
-	{	11,			&noFunc			},	/* 25	Scratch		Deck B	  */
-	{	10,			&pauseSpotify		},	/* 26	Play			Deck B	  */
-	{	 9,			&noFunc			},	/* 27	Cue			Deck B	  */
-	{	25,			&connectDroidcam	},	/* 28	Key Deck A+B	Deck A+B	  */
-	{	 8,			&noFunc			},	/* 29	EXT IN A		Input Select*/
-	{	 7,			&noFunc			},	/* 30	EXT IN B		Input Select*/
-	{	 6,			&noFunc			},	/* 31	ON			FX Control  */
-	{	 5,			&noFunc			},	/* 32	FXv			FX Control  */
-	{	 4,			&noFunc			},	/* 33	FX^			FX Control  */
-	{	 3,			&noFunc			},	/* 34	Action		FX Control  */
-	{	 2,			&noFunc			},	/* 35	Cue A		Cue Select  */
-	{	 1,			&noFunc			},	/* 36	Cue B		Cue Select  */
+/* Key	Midi Value		Function					Key name		Location	  */
+/*  0 */	{	-1,			&noFunc			}, /*	Search <<<	Deck A	  */	
+/*  1 */	{	-1,			&noFunc			}, /*	Search >>>	Deck A	  */
+/*  2 */	{	-1,			&noFunc			}, /*	Bend -		Deck A	  */
+/*  3 */	{	-1,			&noFunc			}, /*	Bend +		Deck A	  */
+/*  4 */	{	-1,			&noFunc			}, /*	Set Cue		Deck A	  */
+/*  5 */	{	21,			&noFunc			}, /*	Reloop		Deck A	  */
+/*  6 */	{	-1,			&nextSong			}, /*	Search <<<	Deck B	  */
+/*  7 */	{	-1,			&previousSong		}, /*	Search >>>	Deck B	  */
+/*  8 */	{	-1,			&noFunc			}, /*	Bend -		Deck B	  */
+/*  9 */	{	-1,			&noFunc			}, /*	Bend +		Deck B	  */
+/* 10 */	{	-1,			&noFunc			}, /*	Set Cue		Deck B	  */
+/* 11 */	{	13,			&noFunc			}, /*	Reloop		Deck B	  */
+/* 12 */	{	24,			&mainMaster		}, /*	Low Kill		Deck A	  */
+/* 13 */	{	23,			&mainPhone		}, /*	Mid Kill		Deck A	  */
+/* 14 */	{	22,			&noFunc			}, /*	High Kill		Deck A	  */
+/* 15 */	{	-1,			&noFunc			}, /*	Set Cue		Deck A	  */
+/* 16 */	{	20,			&noFunc			}, /*	Sync			Deck A	  */
+/* 17 */	{	19,			&noFunc			}, /*	Scratch		Deck A	  */
+/* 18 */	{	18,			&noFunc			}, /*	Play			Deck A	  */
+/* 19 */	{	17,			&noFunc			}, /*	Cue			Deck A	  */
+/* 20 */	{	16,			&musicMaster		}, /*	Low Kill		Deck B	  */
+/* 21 */	{	15,			&musicPhone		}, /*	Mid Kill		Deck B	  */
+/* 22 */	{	14,			&noFunc			}, /*	High Kill		Deck B	  */
+/* 23 */	{	-1,			&noFunc			}, /*	Set loop		Deck B	  */
+/* 24 */	{	12,			&noFunc			}, /*	Sync			Deck B	  */
+/* 25 */	{	11,			&noFunc			}, /*	Scratch		Deck B	  */
+/* 26 */	{	10,			&pauseSpotify		}, /*	Play			Deck B	  */
+/* 27 */	{	 9,			&noFunc			}, /*	Cue			Deck B	  */
+/* 28 */	{	25,			&connectDroidcam	}, /*	Key Deck A+B	Deck A+B	  */
+/* 29 */	{	 8,			&noFunc			}, /*	EXT IN A		Input Select*/
+/* 30 */	{	 7,			&noFunc			}, /*	EXT IN B		Input Select*/
+/* 31 */	{	 6,			&noFunc			}, /*	ON			FX Control  */
+/* 32 */	{	 5,			&noFunc			}, /*	FXv			FX Control  */
+/* 33 */	{	 4,			&noFunc			}, /*	FX^			FX Control  */
+/* 34 */	{	 3,			&noFunc			}, /*	Action		FX Control  */
+/* 35 */	{	 2,			&noFunc			}, /*	Cue A		Cue Select  */
+/* 36 */	{	 1,			&noFunc			}, /*	Cue B		Cue Select  */
 };
 
 knobFunc knobs[20] = { 
