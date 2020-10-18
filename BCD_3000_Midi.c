@@ -5,7 +5,6 @@
 #include <stdio.h>
 #include "header.h"
 #include "config.h"
-#include <sys/wait.h> 
 
 int status;
 int mode = SND_RAWMIDI_SYNC;
@@ -30,21 +29,27 @@ void main(){
 	char noteon[3];
 	openMidi(portname);
 	while(1){
-		waitpid(-1, NULL, WNOHANG);
+		/*waitpid(-1, NULL, WNOHANG);*/
 		int key = readMidi(noteon); //reads midi input and return the key/knob that was used
-		noteon[1] = midiValues[key];
+		noteon[1] = buttons[key].led;
 
-		if(noteon[1] != -1 && (unsigned char)noteon[0] == 0x90){ //0x90 == button 0xB0 == knob
-			noteon[0] = 0xB0;
-			noteon[2] = ledStatus[key] = 127 - ledStatus[key]; //toggle led
-			writeMidi(noteon);
+		if((unsigned char)noteon[0] == 0x90){
+			if(noteon[1] != -1){ //0x90 == button 0xB0 == knob
+				noteon[0] = 0xB0;
+				noteon[2] = buttons[key].ledStatus = 127 - buttons[key].ledStatus; //toggle led
+				writeMidi(noteon);
+			}
+			buttons[key].function(noteon[2]);
+		}
+		else {
+			knobs[key](noteon[2]);
 		}
 
 		//printf("%x %d %d\n",(unsigned char)noteon[0], key, (int)noteon[2]); //to print info
-		if(fork() == 0){
-			buttons[key](noteon[2]);
-			exit(0);
-		}
+		/*if(fork() == 0){*/
+			/*buttons[key](noteon[2]);*/
+			/*exit(0);*/
+		/*}*/
 	}
 }
 
@@ -71,10 +76,7 @@ int readMidi(char buffer[3]){
 			errormessage("Problem reading MIDI input: %s", snd_strerror(status));
 		}
 		key = (int)buffer[1];
-	} while(((int)buffer[2] != 127 && 
-		(unsigned char)buffer[0] == 0x90) ||
-		(((unsigned char)buffer[0] != 0x90) && 
-		(key == 18 || key == 19 || key == 12 || key == 11)));
+	} while(((int)buffer[2] != 127 && (unsigned char)buffer[0] == 0x90));
 	return key;
 }
 
@@ -126,8 +128,8 @@ void previousSong(char led){
 	system(NEXT);
 }
 
-void connectDroidCam(char led){
-	system(DROIDCAM);
+void connectDroidcam(char led){
+	DROIDCAM(audio);
 }
 
 void noFunc(char led){

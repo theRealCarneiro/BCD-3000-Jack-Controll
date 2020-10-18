@@ -3,6 +3,15 @@
 
 typedef void (*keyFunc) (char);
 
+typedef void (*knobFunc) (char);
+
+typedef struct keys {
+	int led;
+	keyFunc function;
+	int ledStatus;
+} keys;
+
+
 void errormessage(const char *format, ...);
 
 void openMidi(const char* portname);
@@ -31,7 +40,7 @@ void nextSong(char led);
 
 void previousSong(char led);
 
-void connectDroidCam(char led);
+void connectDroidcam(char led);
 
 void noFunc(char led);
 

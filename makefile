@@ -1,10 +1,28 @@
-BCD:	BCD_3000_Midi.o
-	gcc BCD_3000_Midi.o -o BCD -lasound
-BCD_3000_Midi.o:	BCD_3000_Midi.c
-	gcc -c BCD_3000_Midi.c
+PREFIX = /usr/local
+MANPREFIX = ${PREFIX}/share/man
+
+CC = gcc
+CCFLAGS= -lasound
+
+TARGET = BCD
+SRC = BCD_3000_Midi.c
+OBJ = ${SRC:.c=.o}
+
+BCD:	${OBJ}
+	${CC} ${OBJ} -o $@ ${CCFLAGS}
+
+.c.o:
+	${CC} -c ${SRC}
+
+${OBJ}:	config.h
+
 clean:
-	rm -rf *.o BCD
-install:
-	install BCD /usr/local/bin
+	rm -rf *.o ${TARGET}
+
+install:	BCD
+	install BCD ${PREFIX}/bin
+
 uninstall:
-	rm /usr/local/bin/BCD
+	rm ${PREFIX}/bin/BCD
+
+.PHONY: clean install uninstall
