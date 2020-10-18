@@ -18,17 +18,17 @@
 #define DROIDCAM(TYPE) \
 	system("/home/gabriel/.local/bin/droidcamcli " STR(TYPE))
 
-#define VOL(TYPE,NAME)			\
-	char a[4];				\
-	char cmd[100];				\
-	if(led <= 100){			\
-		sprintf(a, "%d", led);	\
+#define VOL(TYPE,NAME)				\
+	char a[4];					\
+	char cmd[100];					\
+	if(led > 0){					\
+		sprintf(a, "%d", led - 27);	\
 		strcat(strcpy(cmd, "/home/gabriel/.local/bin/pulse_vol " STR(TYPE) " "  STR(NAME) " "), a); \
-		system(cmd);			\
+		system(cmd);				\
 	}
 
 keys buttons[37] = {
-/* Key	Midi Value		Function					Key name		Location	  */
+/* Key		Led key		Function					Key name		Location	  */
 /*  0 */	{	-1,			&noFunc			}, /*	Search <<<	Deck A	  */	
 /*  1 */	{	-1,			&noFunc			}, /*	Search >>>	Deck A	  */
 /*  2 */	{	-1,			&noFunc			}, /*	Bend -		Deck A	  */
@@ -69,24 +69,24 @@ keys buttons[37] = {
 };
 
 knobFunc knobs[20] = { 
-	&mainVolume, 	//0		Volume Fader	Deck	A
-	&noFunc,	   	//1		Cross Fader	Deck A+B
-	&musicVolume,	//2		Volume Fader	Deck B
-	&noFunc,		//3		Low Eq		Deck A
-	&noFunc,		//4		Mid Eq		Deck A
-	&noFunc,		//5		High Eq		Deck A
-	&noFunc,		//6		Gain			Deck A
-	&noFunc,		//7		Low Eq		Deck B
-	&noFunc,		//8		Mid Eq		Deck B
-	&noFunc,		//9		High Eq		Deck B
-	&noFunc,		//10		Gain			Deck B
-	&noFunc,		//11		Pitch Fader	Deck A
-	&noFunc,		//12		Pitch Fader	Deck B
-	&noFunc,		//13		Data 4		Fx Control
-	&noFunc,		//14		Data 4		Fx Control
-	&noFunc,		//15		Data 4		Fx Control
-	&noFunc,		//16		Data 4		Fx Control
-	&micVolume,	//17		Phones Mix	Output
-	&noFunc,		//18		Scratch Wheel	Deck B
-	&noFunc,		//19		Scratch Wheel	Deck A
+/*  0 */	&mainVolume, 	/* 	Volume Fader	Deck	A		*/
+/*  1 */	&noFunc,	   	/* 	Cross Fader	Deck A+B		*/
+/*  2 */	&musicVolume,	/* 	Volume Fader	Deck B		*/
+/*  3 */	&noFunc,		/* 	Low Eq		Deck A		*/
+/*  4 */	&noFunc,		/* 	Mid Eq		Deck A		*/
+/*  5 */	&noFunc,		/* 	High Eq		Deck A		*/
+/*  6 */	&noFunc,		/* 	Gain			Deck A		*/
+/*  7 */	&noFunc,		/* 	Low Eq		Deck B		*/
+/*  8 */	&noFunc,		/* 	Mid Eq		Deck B		*/
+/*  9 */	&noFunc,		/* 	High Eq		Deck B		*/
+/* 10 */	&noFunc,		/*	Gain			Deck B		*/
+/* 11 */	&noFunc,		/*	Pitch Fader	Deck A		*/
+/* 12 */	&noFunc,		/*	Pitch Fader	Deck B		*/
+/* 13 */	&noFunc,		/*	Data 4		Fx Control	*/
+/* 14 */	&noFunc,		/*	Data 4		Fx Control	*/
+/* 15 */	&noFunc,		/*	Data 4		Fx Control	*/
+/* 16 */	&noFunc,		/*	Data 4		Fx Control	*/
+/* 17 */	&micVolume,	/*	Phones Mix	Output		*/
+/* 18 */	&noFunc,		/*	Scratch Wheel	Deck B		*/
+/* 19 */	&noFunc,		/*	Scratch Wheel	Deck A		*/
 };

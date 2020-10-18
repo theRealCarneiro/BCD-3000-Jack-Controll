@@ -1,3 +1,9 @@
+#include <alsa/asoundlib.h>
+#include <alsa/control.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include <pthread.h>
 #include "header.h"
 #include "config.h"
 
@@ -10,42 +16,46 @@ void main(){
 
 	FILE *fp;
 	char hw[10];
-
 	fp = popen("/usr/bin/amidi -l | /usr/bin/awk '/BCD/{print $2}'", "r"); 
 	if (fp == NULL) {
 		fprintf(stderr, "Failed to run command\n");
 		exit(1);
 	}
-
 	fgets(hw, sizeof(hw)-1, fp);
 	pclose(fp);
 
 	const char *portname = hw;
 	char noteon[3];
+	char buffer[3];
+	pthread_t midiinthread;
 	openMidi(portname);
 	while(1){
-		/*waitpid(-1, NULL, WNOHANG);*/
-		int key = readMidi(noteon); //reads midi input and return the key/knob that was used
-		noteon[1] = buttons[key].led;
-
-		if((unsigned char)noteon[0] == 0x90){
-			if(noteon[1] != -1){ //0x90 == button 0xB0 == knob
-				noteon[0] = 0xB0;
-				noteon[2] = buttons[key].ledStatus = 127 - buttons[key].ledStatus; //toggle led
-				writeMidi(noteon);
-			}
-			buttons[key].function(noteon[2]);
-		}
-		else {
-			knobs[key](noteon[2]);
+		int key = readMidi(buffer); //reads midi and return key
+		noteon[1] = buttons[key].ledKey;
+		if((unsigned char)buffer[0] == 0x90 && noteon[1] != -1){ //0x90 == button 0xB0 == knob
+			noteon[0] = 0xB0;
+			noteon[2] = buffer[2] = buttons[key].ledStatus = 127 - buttons[key].ledStatus; //toggle led
+			writeMidi(noteon);
 		}
 
-		//printf("%x %d %d\n",(unsigned char)noteon[0], key, (int)noteon[2]); //to print info
-		/*if(fork() == 0){*/
-			/*buttons[key](noteon[2]);*/
-			/*exit(0);*/
-		/*}*/
+		status = pthread_create(&midiinthread, NULL, threadFunc, (void*)buffer);
+		if (status == -1) {
+			errormessage("Unable to create MIDI input thread.");
+			exit(1);
+		}
 	}
+}
+
+void *threadFunc(void *args){
+	char *noteon = (char*)args;
+	int key = (int)noteon[1];
+	if((unsigned char)noteon[0] == 0x90) //0x90 == button 0xB0 == knob
+		buttons[key].function(noteon[2]);
+	else 
+		knobs[key](noteon[2]);
+
+	pthread_exit(NULL);
+	//printf("%x %d %d\n",(unsigned char)noteon[0], (int)noteon[1], (int)noteon[2]); //to print info
 }
 
 void errormessage(const char *format, ...) {

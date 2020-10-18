@@ -1,18 +1,14 @@
-#include <alsa/asoundlib.h>
-#include <alsa/control.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-
 typedef void (*keyFunc) (char);
 
 typedef void (*knobFunc) (char);
 
 typedef struct keys {
-	int led;
+	int ledKey;
 	keyFunc function;
 	int ledStatus;
 } keys;
+
+void *threadFunc(void *args);
 
 void errormessage(const char *format, ...);
 

@@ -2,7 +2,7 @@ PREFIX = /usr/local
 MANPREFIX = ${PREFIX}/share/man
 
 CC = gcc
-CCFLAGS= -lasound
+CCFLAGS= -lasound -lpthread
 
 TARGET = BCD
 SRC = BCD_3000_Midi.c
