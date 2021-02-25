@@ -6,7 +6,7 @@ int mode = SND_RAWMIDI_SYNC;
 snd_rawmidi_t *midiin = NULL;
 snd_rawmidi_t *midiout = NULL;
 
-void main(){
+int main(){
 
 	FILE *fp;
 	char hw[10];
@@ -42,6 +42,7 @@ void main(){
 			exit(1);
 		} else thread_exists = 1;
 	}
+	return 0;
 }
 
 void *threadFunc(void *args){
@@ -92,7 +93,7 @@ void writeMidi(char noteon[3]){
 }
 
 void key_cmd(int key){
-	if(strcmp(buttons[key].cmd_on, "") && buttons[key].cmd_off != ""){
+	if(strcmp(buttons[key].cmd_on, "") && strcmp(buttons[key].cmd_off, "")){
 		system(buttons[key].led_status ? buttons[key].cmd_on : buttons[key].cmd_off);
 	}
 }

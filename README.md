@@ -6,7 +6,7 @@ The application uses the alsa api to read and write midi messages, and also has 
 
 ## How to configure the commands
 
-Just create a function in the main file, than link it to the buttons struct in the config.h file
+Just edit the config.h file
 
 ## How to install
 
