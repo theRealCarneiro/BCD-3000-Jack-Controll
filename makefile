@@ -20,9 +20,9 @@ clean:
 	rm -rf *.o ${TARGET}
 
 install:	BCD
-	install BCD ${PREFIX}/bin
+	install -Dm755 BCD ${DESTDIR}${PREFIX}/bin
 
 uninstall:
-	rm ${PREFIX}/bin/BCD
+	rm ${DESTDIR}${PREFIX}/bin/BCD
 
 .PHONY: clean install uninstall
