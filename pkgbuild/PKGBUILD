@@ -1,0 +1,27 @@
+# Maintainer: Carneiro <gabriel.chaves.carneiro@gmail.com>
+pkgname=bcd
+pkgver=1.0
+pkgrel=1
+pkgdesc="BCD 3000 led mapping"
+url="https://github.com/theRealCarneiro/BCD-3000-Midi-Hotkey"
+arch=('i686' 'x86_64')
+license=('MIT')
+#depends=('base-devel' )
+makedepends=('git' 'make')
+source=(
+		BCD::git://github.com/theRealCarneiro/BCD-3000-Midi-Hotkey
+		)
+md5sums=(
+'SKIP'
+)
+
+build() {
+	cd BCD
+	make
+}
+
+package() {
+	cd BCD
+	#make PREFIX=/usr DESTDIR=$pkgdir install
+	install -Dm755 BCD "$pkgdir/usr/bin/BCD"
+}
