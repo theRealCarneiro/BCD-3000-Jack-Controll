@@ -1,9 +1,3 @@
-#include <alsa/asoundlib.h>
-#include <alsa/control.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-#include <pthread.h>
 #include "header.h"
 #include "config.h"
 
@@ -28,21 +22,25 @@ void main(){
 	char noteon[3];
 	char buffer[3];
 	pthread_t midiinthread;
+	int thread_exists = 0;
 	openMidi(portname);
 	while(1){
-		int key = readMidi(buffer); //reads midi and return key
-		noteon[1] = buttons[key].ledKey;
+		int key = readMidi(buffer); //reads midi and returns key
+		noteon[1] = buttons[key].led_key;
 		if((unsigned char)buffer[0] == 0x90 && noteon[1] != -1){ //0x90 == button 0xB0 == knob
 			noteon[0] = 0xB0;
-			noteon[2] = buffer[2] = buttons[key].ledStatus = 127 - buttons[key].ledStatus; //toggle led
+			noteon[2] = buffer[2] = buttons[key].led_status = 127 - buttons[key].led_status; //toggle led
 			writeMidi(noteon);
 		}
+		buttons[key].led_status = buffer[2];
 
+		if(thread_exists)
+			pthread_join(midiinthread, NULL);
 		status = pthread_create(&midiinthread, NULL, threadFunc, (void*)buffer);
 		if (status == -1) {
 			errormessage("Unable to create MIDI input thread.");
 			exit(1);
-		}
+		} else thread_exists = 1;
 	}
 }
 
@@ -50,12 +48,12 @@ void *threadFunc(void *args){
 	char *noteon = (char*)args;
 	int key = (int)noteon[1];
 	if((unsigned char)noteon[0] == 0x90) //0x90 == button 0xB0 == knob
-		buttons[key].function(noteon[2]);
+		key_cmd(key);
 	else 
-		knobs[key](noteon[2]);
+		knob_cmd(key);
 
 	pthread_exit(NULL);
-	//printf("%x %d %d\n",(unsigned char)noteon[0], (int)noteon[1], (int)noteon[2]); //to print info
+	/*printf("%x %d %d\n",(unsigned char)noteon[0], (int)noteon[1], (int)noteon[2]); //to print info*/
 }
 
 void errormessage(const char *format, ...) {
@@ -93,50 +91,17 @@ void writeMidi(char noteon[3]){
 	}
 }
 
-void mainVolume(char led){
-	VOL(sink, MAIN)
+void key_cmd(int key){
+	if(strcmp(buttons[key].cmd_on, "") && buttons[key].cmd_off != ""){
+		system(buttons[key].led_status ? buttons[key].cmd_on : buttons[key].cmd_off);
+	}
 }
 
-void musicVolume(char led){
-	VOL(sink, MUSIC)
-}
-
-void micVolume(char led){
-	VOL(source,MIC)
-}
-
-void mainMaster(char led){
-	led ? CONNECT(main,master) : DISCONNECT(main,master);
-}
-
-void mainPhone(char led){
-	led ? CONNECT(main,phone) : DISCONNECT(main,phone);
-}
-
-void musicMaster(char led){
-	led ? CONNECT(music,master) : DISCONNECT(music,master);
-}
-
-void musicPhone(char led){
-	led ? CONNECT(music,phone) : DISCONNECT(music,phone);
-}
-
-void pauseSpotify(char led){
-	system(led ? PLAY : PAUSE); 
-}
-
-void nextSong(char led){
-	system(PREVIOUS);
-}
-
-void previousSong(char led){
-	system(NEXT);
-}
-
-void connectDroidcam(char led){
-	DROIDCAM(audio);
-}
-
-void noFunc(char led){
-	return;
+void knob_cmd(int key){
+	if(strcmp(buttons[key].knob_cmd, "") && buttons[key].led_status - 27 >= 0){
+		char cmd_str[100];
+		sprintf(cmd_str, "%s%d", buttons[key].knob_cmd, buttons[key].led_status - 27);
+		printf("%s\n",cmd_str);
+		system(cmd_str);
+	} 
 }
