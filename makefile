@@ -20,7 +20,7 @@ clean:
 	rm -rf *.o ${TARGET}
 
 install:	BCD
-	install -Dm755 BCD ${DESTDIR}${PREFIX}/bin
+	install -Dm755 BCD ${DESTDIR}${PREFIX}/bin/BCD
 
 uninstall:
 	rm ${DESTDIR}${PREFIX}/bin/BCD
